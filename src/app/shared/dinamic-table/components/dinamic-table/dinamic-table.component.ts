@@ -62,10 +62,9 @@ export class DinamicTableComponent implements OnChanges {
   ngAfterViewInit() {}
 
     removeChecks(){
-      const copySelectedRows = JSON.parse(JSON.stringify(this.selectedRows));
-      // this.selectedRows = copySelectedRows.filter((row) => row.id === 'null');
-      this.selectedRows = this.emptyselectedRows;
-      console.log('DELETE', this.selectedRows)
+      const copySelectedRows = JSON.parse(JSON.stringify(this.emptyselectedRows));
+      this.selectedRows = copySelectedRows;
+      this.rowData = JSON.parse(JSON.stringify(this.rowData));
     }
 
     removeCheck(change){

@@ -10,25 +10,25 @@ import { Change } from '../../interfaces/change';
 })
 
 export class DeleteComponent {
-  @Input() id: string | number;
+  @Input() value: string | number;
   @Input() isEnable: boolean = true;
   @Input() key: string = 'id';
   @Output() change: EventEmitter<Change> = new EventEmitter();
 
-  delete(id) {
-      this.change.emit(
-        {
-        typeChange : 'remove',
-        value: id,
+  delete(value) {
+    this.change.emit(
+      {
+        typeChange: 'remove',
+        value: value,
         key: this.key,
       }
-      )
-      // ).catch((err) => { })
+    )
+    // ).catch((err) => { })
   }
 
   agInit(params, key, value): void {
-    this.id = value;
-    this.isEnable = params.isEnable;
+    this.value = value;
+    // this.isEnable = params.isEn;
     this.key = key;
   }
 }
