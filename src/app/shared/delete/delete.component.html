@@ -1,5 +1,5 @@
  
   <button type="button" (click)="delete(id)" [id]="value" class="btn btn-simple btn-danger btn-icon remove Button-delete"
-  [disabled]="false">
+  [disabled]="!isEditable">
   <i class="material-icons" (click)="delete(id)">delete</i>
 </button>
