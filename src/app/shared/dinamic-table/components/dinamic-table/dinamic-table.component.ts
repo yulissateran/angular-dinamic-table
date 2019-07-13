@@ -27,6 +27,7 @@ export class DinamicTableComponent implements OnChanges {
   @Input() conditionDelete: any;
   @Output() public change: EventEmitter<any> = new EventEmitter();
   public selectedRows: any[] = [];
+  public emptyselectedRows: any[] = [];
 
   constructor(private _renderer: Renderer2) { }
 
@@ -42,12 +43,18 @@ export class DinamicTableComponent implements OnChanges {
         this.change.emit(this.rowData);
         break;
       case 'checked':
-         this.addCheck(copyRowData,change)
+         this.addCheck(copyRowData,change);
+         
+         this.rowData = copyRowData;
         break;
       case 'uncheck':
-         this.removeCheck(copyRowData)
+         this.removeCheck(change);
+         console.log('SelectedRows',this.selectedRows);
+         this.rowData = copyRowData;
+
         break;
       default:
+          this.rowData = copyRowData;
         break;
     }
   }
@@ -55,20 +62,24 @@ export class DinamicTableComponent implements OnChanges {
   ngAfterViewInit() {}
 
     removeChecks(){
-      const emptySelectedRows = [];
-      this.selectedRows = JSON.parse(JSON.stringify(emptySelectedRows))
+      const copySelectedRows = JSON.parse(JSON.stringify(this.selectedRows));
+      // this.selectedRows = copySelectedRows.filter((row) => row.id === 'null');
+      this.selectedRows = this.emptyselectedRows;
+      console.log('DELETE', this.selectedRows)
     }
 
     removeCheck(change){
       const copySelectedRows = JSON.parse(JSON.stringify(this.selectedRows));
-      this.selectedRows = copySelectedRows.filter((row)=>row[change.key] !== change.value);
+      this.selectedRows = copySelectedRows.filter((row)=>{
+        // console.log(row[change.key] !== change.value, row[change.key] , change.value, row.Ruc, change);
+        return row[change.key] !== change.value});
     }
 
     addCheck(copyRowData, change){
       if(this.selectedRows.length === 0 || this.selectionMultiple){
         const row  = copyRowData.find((row)=>row[change.key] === change.value);
         const copySelectedRows = JSON.parse(JSON.stringify(this.selectedRows));
-        this.selectedRows = copySelectedRows.push(row);
+        this.selectedRows = copySelectedRows.concat(row);
       }
      }
 

@@ -7,20 +7,18 @@ import { Change } from '../dinamic-table/interfaces/change';
   styleUrls: ['checkbox.component.css']
 })
 
-export class CheckboxComponent  implements OnChanges {
+export class CheckboxComponent  implements OnChanges, OnInit {
   @Input() isSelectable: boolean = true;
+  @Input() selectedRows: any[];
   // @Input() id: string | number;
   @Input() key: string | number;
   @Input() value:  any;
   @Input() isChecked: boolean = false;
-  @Output() checked: EventEmitter<string | number> = new EventEmitter();
   @Output() change: EventEmitter<Change> = new EventEmitter();
-  @Output() uncheck: EventEmitter<string | number> = new EventEmitter();
 
   clicked(value) {
     console.log('value',value, 'checked: ', this.isChecked);
     if(this.isChecked) {
-      // this.uncheck.emit(id);
       this.change.emit({
         typeChange: 'uncheck',
         key: this.key,
@@ -28,7 +26,6 @@ export class CheckboxComponent  implements OnChanges {
       });
     }
     if(!this.isChecked)  {
-      // this.checked.emit(id);
       this.change.emit({
         typeChange: 'checked',
         key: this.key,
@@ -39,16 +36,18 @@ export class CheckboxComponent  implements OnChanges {
   }
 
   ngOnChanges(change: SimpleChanges){
-    if(change.isChecked){
-      console.log('change', this.value ,change.isChecked.currentValue)
-      this.isChecked = change.isChecked.currentValue;
-    }
+    this.isChecked = this.selectedRows.some((row)=>row[this.key] === this.value )
+  }
+
+  ngOnInit(){
+    console.log('selectedrows',this.selectedRows);
+
+    this.isChecked = this.selectedRows.some((row)=>row[this.key] === this.value )
   }
 
   agInit(params, key, value){
-    console.log(params, key, value);
+    // console.log(params, key, value);
     this.key= key;
     this.value= value;
-    this.isChecked = params.isChecked;
   }
 }
