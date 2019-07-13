@@ -37,7 +37,7 @@ export class CheckboxComponent  implements OnChanges, OnInit {
 
   ngOnChanges(change: SimpleChanges){
     this.isChecked = this.selectedRows.some((row)=>row[this.key] === this.value )
-    console.log('onChangeChexbox',this.selectedRows);
+    console.log('onChangeChexbox');
 
   }
 

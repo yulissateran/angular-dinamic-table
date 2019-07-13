@@ -23,13 +23,19 @@ export class DinamicTableComponent implements OnChanges {
   @Input() pagination: boolean;
   @Input() paginationPageSize: number;
   @Input() paginationNumberFormatter: boolean;
-  @Input() add: boolean = true;
+  public isEditable: boolean = true;
   @Input() conditionDelete: any;
   @Output() public change: EventEmitter<any> = new EventEmitter();
   public selectedRows: any[] = [];
   public emptyselectedRows: any[] = [];
 
   constructor(private _renderer: Renderer2) { }
+
+
+  disabled(){
+    this.isEditable = false;
+    this.rowData = JSON.parse(JSON.stringify(this.rowData)); 
+  }
 
   ngOnInit() {  }
 
@@ -51,7 +57,6 @@ export class DinamicTableComponent implements OnChanges {
          this.removeCheck(change);
          console.log('SelectedRows',this.selectedRows);
          this.rowData = copyRowData;
-
         break;
       default:
           this.rowData = copyRowData;
@@ -70,7 +75,6 @@ export class DinamicTableComponent implements OnChanges {
     removeCheck(change){
       const copySelectedRows = JSON.parse(JSON.stringify(this.selectedRows));
       this.selectedRows = copySelectedRows.filter((row)=>{
-        // console.log(row[change.key] !== change.value, row[change.key] , change.value, row.Ruc, change);
         return row[change.key] !== change.value});
     }
 

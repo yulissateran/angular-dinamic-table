@@ -20,6 +20,7 @@ export class CellTableComponent {
   @Input() value: any[];
   @Input() frameworkComponents: any[];
   @Input() selectedRows: any[];
+  @Input() isEditable: boolean;
   @Output() change: EventEmitter<Change> = new EventEmitter();
   public component: any;
   @ViewChild(DinamicContDirective , {static: true}) injectHost: DinamicContDirective;
@@ -45,6 +46,7 @@ export class CellTableComponent {
     const factory = this._componentFactoryResolver.resolveComponentFactory(component);
     ref.clear();
     this.component = ref.createComponent(factory);
+    this.component.instance.isEditable = this.isEditable;
     this.component.instance.agInit(this.row, this.column.field, this.row[this.column.field]);
     this.component.instance.change.subscribe((change: Change ) =>{
       console.log('change', change);
@@ -55,7 +57,6 @@ export class CellTableComponent {
     const ref = this.injectHost.viewContainerRef;
     const component = CheckboxComponent;
     const factory = this._componentFactoryResolver.resolveComponentFactory(component);
-    // ref.clear();
     this.component = ref.createComponent(factory);
     this.component.instance.selectedRows = this.selectedRows;    
     this.component.instance.agInit(this.row, this.column.field,this.row[this.column.field]);
@@ -68,7 +69,6 @@ export class CellTableComponent {
     const ref = this.injectHost.viewContainerRef;
     const component = CellContentComponent
     const factory = this._componentFactoryResolver.resolveComponentFactory(component);
-    // ref.clear();
     this.component = ref.createComponent(factory);
     this.component.instance.agInit(this.row, this.column.field,this.row[this.column.field]);
     this.component.instance.change.subscribe((change: Change ) =>{

@@ -11,6 +11,7 @@
               [row]="row" [column]="column"
               (change)="handleChanges($event)"
               [key]="column.field"
+              [isEditable]="isEditable"
               [value]="row[column.field]"
               [selectedRows]="selectedRows"
               [frameworkComponents]="frameworkComponents"

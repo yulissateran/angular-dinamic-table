@@ -1,4 +1,4 @@
-import { Component, Output, Input, EventEmitter } from '@angular/core';
+import { Component, Output, Input, EventEmitter, OnInit } from '@angular/core';
 
 import { Change } from '../../interfaces/change';
 
@@ -9,9 +9,9 @@ import { Change } from '../../interfaces/change';
   templateUrl: 'delete.component.html'
 })
 
-export class DeleteComponent {
+export class DeleteComponent implements OnInit{
   @Input() value: string | number;
-  @Input() isEnable: boolean = true;
+  @Input() isEditable: boolean = true;
   @Input() key: string = 'id';
   @Output() change: EventEmitter<Change> = new EventEmitter();
 
@@ -24,6 +24,11 @@ export class DeleteComponent {
       }
     )
     // ).catch((err) => { })
+  }
+
+  ngOnInit(){
+    console.log('isEditable', this.isEditable);
+    
   }
 
   agInit(params, key, value): void {

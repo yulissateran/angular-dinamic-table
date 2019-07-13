@@ -30,7 +30,6 @@ console.log('remove', id);
 
   agInit(params, key, value): void {
     this.id = value;
-    this.isEnable = params.isEnable;
     this.key = key;
   }
 }
