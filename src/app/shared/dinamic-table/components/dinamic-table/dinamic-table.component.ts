@@ -7,15 +7,15 @@ import { Change } from '../../interfaces/change';
 
 
 @Component({
-  // moduleId: module.id,
   selector: 'app-dinamic-table',
   templateUrl: 'dinamic-table.component.html',
   styleUrls: ['dinamic-table.component.css', '../../css/table.css']
 
 })
 
-export class DinamicTableComponent  implements OnChanges {
+export class DinamicTableComponent implements OnChanges {
   @Input() context: any;
+  @Input() selectionMultiple: boolean = true;
   @Input() frameworkComponents: any;
   @Input() rowData: any[];
   @Input() columnDefs: any[];
@@ -23,56 +23,57 @@ export class DinamicTableComponent  implements OnChanges {
   @Input() pagination: boolean;
   @Input() paginationPageSize: number;
   @Input() paginationNumberFormatter: boolean;
-  @Output() public gridReady: EventEmitter<any> = new EventEmitter<any[]>();
-
-
-  @ViewChild('btnCloseMdlProviders', {static: false}) btnCloseMdlProviders: ElementRef;
   @Input() add: boolean = true;
   @Input() conditionDelete: any;
   @Output() public change: EventEmitter<any> = new EventEmitter();
-  public formSearchProviders: FormGroup;
-  public selectedProviders: any[] = [];
+  public selectedRows: any[] = [];
 
+  constructor(private _renderer: Renderer2) { }
 
+  ngOnInit() {  }
 
-  constructor(private _renderer: Renderer2) {
+  ngOnChanges(changes: SimpleChanges) { }
 
-
+  handleChanges(change: Change) {
+    const copyRowData = JSON.parse(JSON.stringify(this.rowData));
+    switch (change.typeChange) {
+      case 'remove':
+        this.rowData = this.conditionDelete ? copyRowData.filter(this.conditionDelete) : copyRowData.filter((row) => row[change.key] !== change.value);
+        this.change.emit(this.rowData);
+        break;
+      case 'checked':
+         this.addCheck(copyRowData,change)
+        break;
+      case 'uncheck':
+         this.removeCheck(copyRowData)
+        break;
+      default:
+        break;
+    }
   }
 
-  ngOnInit() {
-  }
+  ngAfterViewInit() {}
 
-  ngOnChanges(changes: SimpleChanges) {}
+    removeChecks(){
+      const emptySelectedRows = [];
+      this.selectedRows = JSON.parse(JSON.stringify(emptySelectedRows))
+    }
 
-   handleChanges(change: Change){
-     const copyRowDta = JSON.parse(JSON.stringify(this.rowData));
-     switch (change.typeChange) {
-       case 'remove':
-         this.rowData =  this.conditionDelete? copyRowDta.filter(this.conditionDelete): copyRowDta.filter((row) => row[change.key] !== change.value);
-         this.change.emit(this.rowData);
-         break;
-       default:
-         break;
+    removeCheck(change){
+      const copySelectedRows = JSON.parse(JSON.stringify(this.selectedRows));
+      this.selectedRows = copySelectedRows.filter((row)=>row[change.key] !== change.value);
+    }
+
+    addCheck(copyRowData, change){
+      if(this.selectedRows.length === 0 || this.selectionMultiple){
+        const row  = copyRowData.find((row)=>row[change.key] === change.value);
+        const copySelectedRows = JSON.parse(JSON.stringify(this.selectedRows));
+        this.selectedRows = copySelectedRows.push(row);
+      }
      }
 
-   }
-
-
-  ngAfterViewInit() { 
-
-
-  // removeChecks(){
-  //   const copyProviders = JSON.parse(JSON.stringify(this.providersBD));
-  //   this.providersBD = copyProviders.map((provider)=>{
-  //       provider.isChecked = false;
-  //       return provider;
-  //     })
-
-  }
-
-
-
+     getSelectedRows = () => this.selectedRows;
+     
 }
 
 

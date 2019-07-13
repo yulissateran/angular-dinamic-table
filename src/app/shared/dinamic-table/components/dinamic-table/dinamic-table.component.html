@@ -10,6 +10,7 @@
               (change)="handleChanges($event)"
               [key]="column.field"
               [value]="row[column.field]"
+              [selectedRows]="selectedRows"
               [frameworkComponents]="frameworkComponents"
               ></app-cell-table>
           </tr>

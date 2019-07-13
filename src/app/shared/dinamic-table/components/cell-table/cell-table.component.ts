@@ -19,6 +19,7 @@ export class CellTableComponent {
   @Input() key: any[];
   @Input() value: any[];
   @Input() frameworkComponents: any[];
+  @Input() selectedRows: any[];
   @Output() change: EventEmitter<Change> = new EventEmitter();
   public component: any;
   @ViewChild(DinamicContDirective , {static: true}) injectHost: DinamicContDirective;
@@ -28,8 +29,6 @@ export class CellTableComponent {
     public _viewContainerRef: ViewContainerRef) {
   }
   ngOnInit() {
-    console.clear();
-    console.log(this.frameworkComponents);
     if(this.column.checkboxSelection){
       this.renderCheckbox();
     }
@@ -59,6 +58,7 @@ export class CellTableComponent {
     // ref.clear();
     this.component = ref.createComponent(factory);
     this.component.instance.agInit(this.row, this.column.field,this.row[this.column.field]);
+    this.component.instance.selectedRows = this.selectedRows;
     this.component.instance.change.subscribe((change: Change ) =>{
       console.log('change', change);
       this.change.emit(change) 

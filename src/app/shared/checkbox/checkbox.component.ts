@@ -18,7 +18,7 @@ export class CheckboxComponent  implements OnChanges {
   @Output() uncheck: EventEmitter<string | number> = new EventEmitter();
 
   clicked(value) {
-    console.log('id',id, 'checked: ', this.isChecked);
+    console.log('value',value, 'checked: ', this.isChecked);
     if(this.isChecked) {
       // this.uncheck.emit(id);
       this.change.emit({
@@ -29,19 +29,26 @@ export class CheckboxComponent  implements OnChanges {
     }
     if(!this.isChecked)  {
       // this.checked.emit(id);
-      this.checked.emit(id);
+      this.change.emit({
+        typeChange: 'checked',
+        key: this.key,
+        value: value,
+      });
     this.isChecked = !this.isChecked;
     }
   }
 
   ngOnChanges(change: SimpleChanges){
     if(change.isChecked){
-      console.log('change', this.id,change.isChecked.currentValue)
+      console.log('change', this.value ,change.isChecked.currentValue)
       this.isChecked = change.isChecked.currentValue;
     }
   }
 
   agInit(params, key, value){
-    this.isChecked = value;
+    console.log(params, key, value);
+    this.key= key;
+    this.value= value;
+    this.isChecked = params.isChecked;
   }
 }
