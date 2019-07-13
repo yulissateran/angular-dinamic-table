@@ -1,0 +1,19 @@
+<div class="material-datatables  table-responsive">
+  <table id="tProviders" class="text-table table table-striped table-no-bordered table-hover text-pad" cellspacing="0"
+    width="100%" style="width:100%; overflow: auto;">
+  <app-head-table [columnDefs]="columnDefs"></app-head-table>
+    <tbody>
+      <ng-container *ngIf="rowData.length > 0">
+          <tr  *ngFor="let row of rowData">
+              <app-cell-table *ngFor="let column of columnDefs" 
+              [row]="row" [column]="column"
+              (change)="handleChanges($event)"
+              [key]="column.field"
+              [value]="row[column.field]"
+              [frameworkComponents]="frameworkComponents"
+              ></app-cell-table>
+          </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>

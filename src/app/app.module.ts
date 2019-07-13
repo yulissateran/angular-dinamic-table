@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { DeleteModule } from './shared/delete/delete.module';
+import { DinamicTableModule } from './shared/dinamic-table/dinamic-table.module';
 
 @NgModule({
   declarations: [
@@ -10,7 +12,9 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    DeleteModule,
+    DinamicTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

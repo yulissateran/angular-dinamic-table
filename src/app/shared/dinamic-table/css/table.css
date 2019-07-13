@@ -1,0 +1,29 @@
+.thead {  
+    color: #4d4d4d;
+    padding: 15px;
+}
+
+table{
+  background-color: #e6e6e6;
+}
+
+/* .text-table, .text-table > th, .text-table > td {
+    text-align: center;
+    padding: 2px;
+  
+  } */
+ /*  .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+
+    padding: 4px 8px;
+  }  */
+
+/* .table > td, .table > tr {
+
+  padding: 4px 8px;
+  vertical-align: middle;
+
+}  */
+
+/* .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+padding: 5px 8px;
+} */

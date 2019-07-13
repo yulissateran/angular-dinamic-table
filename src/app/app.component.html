@@ -1,5 +1,12 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
+<app-dinamic-table  
+             [columnDefs]="columnDefs"
+            [frameworkComponents]="frameworkComponents"
+           (change)="handleChanges($event)"
+             [rowData]="rowData"
+            [add]="add"
+            ></app-dinamic-table>
+
+<!-- <div style="text-align:center">
   <h1>
     Welcome to {{ title }}!
   </h1>
@@ -18,4 +25,4 @@
   </li>
 </ul>
 
-<router-outlet></router-outlet>
+<router-outlet></router-outlet> -->
